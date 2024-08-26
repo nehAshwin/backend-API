@@ -12,3 +12,36 @@ export const getAllUser = async(req, res, next)=>{
     }
     return res.status(200).json({users})
 }
+
+// sign up function
+export const signup = async(req, res, next) => {
+    // created request.body field to recieve from frontend
+    const {name, email, password} = req.body;
+
+    // check if user already exists
+    let existingUser;
+    try {
+        existingUser = await User.findOne({email})
+    } catch (err) {
+        return console.log(err)
+    }
+    if (existingUser){
+        return res.status(400).json({message: "User Already Exists! Login Instead"})
+    }
+
+    // if user does not exist, create new user
+    const user = new User({
+        name, 
+        email, 
+        password
+    });
+
+    // try catch block to save user
+    try{
+        await user.save();
+    } catch (err) {
+        return console.log(err)
+    }
+
+    return res.status(201).json({user})
+}
