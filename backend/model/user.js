@@ -1,3 +1,4 @@
+// mongodb: where application data is stored
 import mongoose from "mongoose";
 
 const Schema = mongoose.Schema;
