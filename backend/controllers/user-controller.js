@@ -38,7 +38,8 @@ export const signup = async(req, res, next) => {
     const user = new User({
         name, 
         email, 
-        password: hashedPassword
+        password: hashedPassword, 
+        blogs: []
     });
 
     // try catch block to save user
