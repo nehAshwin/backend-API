@@ -101,3 +101,19 @@ export const deleteById = async(req, res, next) => {
     }
     res.status(200).json({message: "Delete Successful"});
 };
+
+export const getByUserId = async(req, res, next) => {
+    const userId = req.params.id;
+
+    let userBlogs;
+
+    try {
+        userBlogs = await User.findById(userId).populate("blogs");
+    } catch (err) {
+        console.log(err);
+    }
+    if(!userBlogs) {
+        return res.status(404).json({message: "No Blogs Found"});
+    }
+    return res.status(200).json({blogs: userBlogs});
+}
